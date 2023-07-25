@@ -1,11 +1,6 @@
 # 使用支持多架构的基础镜像
 FROM --platform=$BUILDPLATFORM docker.io/library/debian:latest as builder
 
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
-ARG BUILDARCH
-ARG TARGETPLATFORM
-ARG TARGETARCH
 # 设置工作目录
 WORKDIR /app
 
