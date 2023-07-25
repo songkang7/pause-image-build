@@ -20,10 +20,10 @@ RUN if [ $TARGETARCH = "linux/arm64" ]; then \
         aarch64-linux-gnu-gcc -o pause pause.c; \
     fi
 
-RUN echo TARGETPLATFORM
-RUN echo BUILDPLATFORM
-RUN echo BUILDARCH
-RUN echo TARGETARCH
+RUN echo $TARGETPLATFORM
+RUN echo $BUILDPLATFORM
+RUN echo $BUILDARCH
+RUN echo $TARGETARCH
 RUN echo "I am running on $BUILDPLATFORM $BUILDARCH, building for $TARGETPLATFORM $TARGETARCH" > /log
 
 FROM --platform=$TARGETPLATFORM docker.io/library/debian:latest
