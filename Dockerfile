@@ -9,15 +9,8 @@ ARG TARGETARCH
 # 设置工作目录
 WORKDIR /app
 
-RUN apt-get update -y
-
-RUN if [ $BUILDPLATFORM = "linux/amd64" ]; then \
-        apt-get install -y gcc; \
-    fi
-
-RUN if [ $BUILDPLATFORM = "linux/arm64" ]; then \
-            apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross; \
-    fi
+RUN apt-get update -y && apt-get install -y gcc && \
+    apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
 
 COPY pause.c .
 
