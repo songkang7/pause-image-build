@@ -19,8 +19,6 @@ RUN if [ $BUILDPLATFORM = "linux/arm64" ]; then \
             apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross; \
     fi
 
-
-# 将C语言源代码复制到容器中
 COPY pause.c .
 
 # 在amd64架构下编译程序
@@ -35,7 +33,7 @@ RUN if [ $BUILDPLATFORM = "linux/arm64" ]; then \
 
 RUN echo "I am running on $BUILDPLATFORM $BUILDARCH, building for $TARGETPLATFORM $TARGETARCH" > /log
 
-FROM docker.io/library/debian:latest
+FROM --platform=$BUILDPLATFORM docker.io/library/debian:latest
 
 # 复制可执行文件
 COPY --from=builder /app/pause /pause
