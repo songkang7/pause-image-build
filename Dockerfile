@@ -3,7 +3,6 @@ FROM --platform=$BUILDPLATFORM docker.io/library/debian:latest as builder
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 ARG BUILDARCH
-ARG TARGETPLATFORM
 ARG TARGETARCH
 # 设置工作目录
 WORKDIR /app
@@ -23,7 +22,7 @@ RUN if [ $TARGETARCH = "linux/arm64" ]; then \
 
 RUN echo "I am running on $BUILDPLATFORM $BUILDARCH, building for $TARGETPLATFORM $TARGETARCH" > /log
 
-FROM --platform=$BUILDPLATFORM docker.io/library/debian:latest
+FROM --platform=$TARGETPLATFORM docker.io/library/debian:latest
 
 COPY --from=builder /app/pause /pause
 
