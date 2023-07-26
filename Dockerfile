@@ -8,7 +8,6 @@ ARG TARGETARCH
 # 设置工作目录
 WORKDIR /app
 
-COPY . .
 
 RUN if [ $TARGETPLATFORM = "linux/amd64" ]; then \
         $PAUSE == "pause-linux-amd64"; \
