@@ -10,11 +10,11 @@ WORKDIR /app
 
 
 RUN if [ $TARGETPLATFORM = "linux/amd64" ]; then \
-        ENV PAUSE  "pause-linux-amd64"; \
+        ENV PAUSE "pause-linux-amd64"; \
     fi
 
 RUN if [ $TARGETPLATFORM = "linux/arm64" ]; then \
-        ENV PAUSE  "pause-linux-arm64"; \
+        ENV PAUSE "pause-linux-arm64"; \
     fi
 
 COPY $PAUSE pause
