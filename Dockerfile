@@ -4,26 +4,26 @@ ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 ARG BUILDARCH
 ARG TARGETARCH
+
 # 设置工作目录
 WORKDIR /app
 
-RUN apt-get update -y && apt-get install -y gcc && \
-    apt-get install -y gcc-aarch64-linux-gnu libc6-dev-arm64-cross
-
-COPY pause.c .
+COPY . .
 
 RUN if [ $TARGETPLATFORM = "linux/amd64" ]; then \
-        gcc -o pause pause.c; \
+        $PAUSE == "pause-linux-amd64"; \
     fi
 
 RUN if [ $TARGETPLATFORM = "linux/arm64" ]; then \
-        aarch64-linux-gnu-gcc -o pause pause.c; \
+        $PAUSE == "pause-linux-arm64"; \
     fi
+
+COPY $PAUSE pause
 
 RUN echo "I am running on $BUILDPLATFORM $BUILDARCH, building for $TARGETPLATFORM $TARGETARCH" > /log
 
-FROM --platform=$TARGETPLATFORM docker.io/library/debian:latest
+FROM --platform=$TARGETPLATFORM scratch
 
 COPY --from=builder /app/pause /pause
-
+USER 65535:65535
 ENTRYPOINT ["/pause"]
