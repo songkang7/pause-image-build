@@ -13,17 +13,17 @@ RUN apt-get update -y && apt-get install -y gcc && \
 COPY pause.c .
 
 RUN if [ $TARGETPLATFORM = "linux/amd64" ]; then \
-        gcc -o pause pause.c; \
+        gcc -o manager pause.c; \
     fi
 
 RUN if [ $TARGETPLATFORM = "linux/arm64" ]; then \
-        aarch64-linux-gnu-gcc -o pause pause.c; \
+        aarch64-linux-gnu-gcc -o manager pause.c; \
     fi
 
 RUN echo "I am running on $BUILDPLATFORM $BUILDARCH, building for $TARGETPLATFORM $TARGETARCH" > /log
 
-FROM --platform=$TARGETPLATFORM docker.io/library/debian:latest
+FROM --platform=$TARGETPLATFORM registry-cn-hangzhou.ack.aliyuncs.com/dev/debian:13-base
 
-COPY --from=builder /app/pause /pause
+COPY --from=builder /app/manager /manager
 
-ENTRYPOINT ["/pause"]
+ENTRYPOINT ["/manager"]
